@@ -39,12 +39,10 @@ class App extends Component {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
       } else if (cards[firstFlip].image != cards[secondFlip].image) {
-        setTimeout(() => {
-          let newCards = this.state.cards;
-          newCards[firstFlip].flipped = false;
-          newCards[secondFlip].flipped = false;
-          this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
-        }, 1000);
+        let newCards = this.state.cards;
+        newCards[firstFlip].flipped = false;
+        newCards[secondFlip].flipped = false;
+        this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
       }
     }
     this.winningLogic();
