@@ -31,7 +31,7 @@ class App extends Component {
 
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
-    //object destructuring so I don't have to keep typing this.state
+    //object destructuring so I don't have to keep typing this.state.
     const { firstFlip, secondFlip, cards } = this.state;
 
     if (firstFlip != null && secondFlip != null) {
