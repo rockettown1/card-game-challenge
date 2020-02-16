@@ -33,6 +33,7 @@ class App extends Component {
   componentDidUpdate() {
     //object destructuring so I don't have to keep typing this.state
     const { firstFlip, secondFlip, cards } = this.state;
+
     if (firstFlip != null && secondFlip != null) {
       if (cards[firstFlip].image == cards[secondFlip].image) {
         console.log("its a match");
@@ -50,13 +51,9 @@ class App extends Component {
   }
 
   winningLogic = () => {
-    if (
-      this.state.cards.every(card => {
-        return card.flipped == true;
-      })
-    ) {
-      console.log("a winner");
-    }
+    //write a function that determines a winner (every card is turned over)
+    //there's an array method called -every- which you might want to look up.
+    //you then need to decided where the best place to call this method is.
   };
 
   render() {
