@@ -67,6 +67,9 @@ class App extends Component {
     }
     this.winningLogic();
   }
+  refreshPage = () => {
+    window.location.reload(false);
+  };
 
   winningLogic = () => {
     //write a function that determines a winner (every card is turned over)
@@ -88,7 +91,9 @@ class App extends Component {
           );
         })}
         <p>{this.state.message}</p>
-        <button className="reset">Click to reset game</button>
+        <button className="reset" onClick={this.refreshPage}>
+          Click to reset game
+        </button>
       </div>
     );
   }
