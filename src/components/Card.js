@@ -8,7 +8,7 @@ const Card = props => {
     //Check out https://www.npmjs.com/package/react-card-flip if you need more info on usage
     <ReactCardFlip isFlipped={props.flipped} flipDirection="horizontal">
       <div className="card-front" onClick={props.click}>
-        <p>click to turn</p>
+        {/* <p>click to turn</p> */}
       </div>
 
       <div className="card-back">

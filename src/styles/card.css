@@ -1,11 +1,11 @@
 .card-front {
   height: 150px;
   width: 150px;
-  background-color: blue;
+  background-color: #141314;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 15px;
   border-radius: 5px;
 }
 
