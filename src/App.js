@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Card from "./components/Card";
-import Turn from "./components/Turn"
-import "./App.css";
+import Turn from "./components/Turn";
+import Reset from "./components/Reset"
+import "./styles/App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
 
@@ -18,6 +19,10 @@ class App extends Component {
     secondFlip: null,
     turn: 0
   };
+
+  ResetButton = () => {
+    window.location.reload(false)
+  }
 
   flipHandler = index => {
     if (this.state.firstFlip === null) {
@@ -37,7 +42,7 @@ class App extends Component {
     const { firstFlip, secondFlip, cards } = this.state;
 
     if (firstFlip != null && secondFlip !== null) {
-      if (cards[firstFlip].image == cards[secondFlip].image) {
+      if (cards[firstFlip].image === cards[secondFlip].image) {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
         this.setState({turn:this.state.turn +1})
@@ -70,7 +75,7 @@ class App extends Component {
           })}
           <p>{this.state.message}</p>
         </div>
-        
+          <Reset reset = {this.ResetButton}/>
       </div>
     );
   }
