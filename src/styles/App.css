@@ -22,3 +22,11 @@ body {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.winlose {
+  display: flex;
+  height: 100px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
+}

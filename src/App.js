@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Card from "./components/Card";
 import Turn from "./components/Turn";
 import Reset from "./components/Reset"
+import Win from "./components/Win"
 import "./styles/App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
 
 class App extends Component {
   state = {
-    message: "match the cards to win the game",
+    message: "Match the cards to win the game!",
     cards: [
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
@@ -39,30 +40,26 @@ class App extends Component {
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
     //object destructuring so I don't have to keep typing this.state.
-    const { firstFlip, secondFlip, cards } = this.state;
+    const { firstFlip, secondFlip, cards, turn } = this.state;
 
     if (firstFlip != null && secondFlip !== null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
         console.log("its a match");
-        this.setState({ firstFlip: null, secondFlip: null });
-        this.setState({turn:this.state.turn +1})
+        this.setState({ firstFlip: null, secondFlip: null, turn: turn + 1});
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         setTimeout(()=>{
           let newCards = this.state.cards;
           newCards[firstFlip].flipped = false;
           newCards[secondFlip].flipped = false;
-          this.setState({ cards: newCards, firstFlip: null, secondFlip: null })
+          this.setState({ cards: newCards, firstFlip: null, secondFlip: null, turn: turn + 1})
         },1000)
       }
-      this.setState({turn:this.state.turn +1})
     }
-    this.winningLogic();
   }
 
   winningLogic = () => {
-    //write a function that determines a winner (every card is turned over)
-    //there's an array method called -every- which you might want to look up.
-    //you then need to decided where the best place to call this method is.
+    let cardState = this.state.cards
+    return cardState.every( x => x.flipped === true)
   };
 
   render() {
@@ -75,7 +72,10 @@ class App extends Component {
           })}
           <p>{this.state.message}</p>
         </div>
-          <Reset reset = {this.ResetButton}/>
+        <Reset reset = {this.ResetButton}/>
+        <div className = "winlose">
+          {this.winningLogic() ? <Win/> : null}
+        </div>
       </div>
     );
   }
