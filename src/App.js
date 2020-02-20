@@ -14,15 +14,16 @@ class App extends Component {
       { flipped: false, image: BabyMario }
     ],
     firstFlip: null,
-    secondFlip: null
+    secondFlip: null,
+    turns: 1
   };
 
   flipHandler = index => {
-    if (this.state.firstFlip == null) {
+    if (this.state.firstFlip === null) {
       let newCards = this.state.cards;
       newCards[index].flipped = true;
       this.setState({ cards: newCards, firstFlip: index });
-    } else if (this.state.secondFlip == null) {
+    } else if (this.state.secondFlip === null) {
       let newCards = this.state.cards;
       newCards[index].flipped = true;
       this.setState({ cards: newCards, secondFlip: index });
@@ -34,15 +35,17 @@ class App extends Component {
     //object destructuring so I don't have to keep typing this.state.
     const { firstFlip, secondFlip, cards } = this.state;
 
-    if (firstFlip != null && secondFlip != null) {
+    if (firstFlip != null && secondFlip !== null) {
       if (cards[firstFlip].image == cards[secondFlip].image) {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
-      } else if (cards[firstFlip].image != cards[secondFlip].image) {
-        let newCards = this.state.cards;
-        newCards[firstFlip].flipped = false;
-        newCards[secondFlip].flipped = false;
-        this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
+      } else if (cards[firstFlip].image !== cards[secondFlip].image) {
+        setTimeout(()=>{
+          let newCards = this.state.cards;
+          newCards[firstFlip].flipped = false;
+          newCards[secondFlip].flipped = false;
+          this.setState({ cards: newCards, firstFlip: null, secondFlip: null })
+        },1000)
       }
     }
     this.winningLogic();

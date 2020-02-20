@@ -1,3 +1,11 @@
+body {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
 .board {
   max-width: 750px;
   display: flex;
