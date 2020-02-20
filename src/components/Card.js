@@ -1,6 +1,6 @@
 import React from "react";
 import ReactCardFlip from "react-card-flip";
-import "../styles/card.css";
+import "../styles/Card.css";
 
 const Card = props => {
   return (
