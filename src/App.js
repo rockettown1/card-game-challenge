@@ -9,6 +9,7 @@ import KingBoo from "./images/kingboo.png"
 import Morton from "./images/morton.png"
 import ShyGuy from "./images/shyguy.png"
 import Waluigi from "./images/waluigi.png"
+import Refresh from "./images/refresh.png"
 
 class App extends Component {
   state = {
@@ -72,13 +73,27 @@ class App extends Component {
     //you then need to decided where the best place to call this method is.
   };
 
+  // restart = () => {
+  //   this.setState(())
+  // }
+
   render() {
     return (
-      <div className="board">
-        {this.state.cards.map((card, index) => {
+      <div className="container">
+        <div className="title">
+          <h1>Memory Game</h1>
+        </div>
+        <div className="subTitle">
+          <p className="info">Move(s) </p>
+          <p className="info">0 Mins 0 Secs</p>
+          <img className="refresh" src={Refresh}/>
+        </div>
+        <div className="board">
+          {this.state.cards.map((card, index) => {
           return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
         })}
-        <p>{this.state.message}</p>
+        {/* <p>{this.state.message}</p> */}
+        </div>
       </div>
     );
   }
