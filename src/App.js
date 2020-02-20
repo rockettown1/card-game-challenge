@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import Card from "./components/Card";
 import "./App.css";
-import Bowser from "./images/bowser.jpg";
-import BabyMario from "./images/babymario.jpg";
+import Bowser from "./images/bowser.png";
+import BabyMario from "./images/babymario.png";
+import BowserJr from "./images/bowserjr.png"
+import DonkeyKong from "./images/donkeykong.png"
+import KingBoo from "./images/kingboo.png"
+import Morton from "./images/morton.png"
+import ShyGuy from "./images/shyguy.png"
+import Waluigi from "./images/waluigi.png"
 
 class App extends Component {
   state = {
@@ -11,7 +17,19 @@ class App extends Component {
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
       { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario }
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: BowserJr },
+      { flipped: false, image: BowserJr },
+      { flipped: false, image: DonkeyKong },
+      { flipped: false, image: DonkeyKong },
+      { flipped: false, image: KingBoo },
+      { flipped: false, image: KingBoo },
+      { flipped: false, image: Morton },
+      { flipped: false, image: Morton },
+      { flipped: false, image: ShyGuy },
+      { flipped: false, image: ShyGuy },
+      { flipped: false, image: Waluigi},
+      { flipped: false, image: Waluigi},
     ],
     firstFlip: null,
     secondFlip: null
