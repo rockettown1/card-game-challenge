@@ -9,6 +9,7 @@ import Matt from "./images/matt.jpg";
 import Waluigi from "./images/waluigi.jpg";
 import Wario from "./images/Wario.jpg";
 import Yoshi from "./images/yoshi.jpg";
+import Reset from "./images/reset.png";
 
 class App extends Component {
   state = {
@@ -32,7 +33,8 @@ class App extends Component {
       
     ],
     firstFlip: null,
-    secondFlip: null
+    secondFlip: null,
+    moves: 0
   };
 
   flipHandler = index => {
@@ -75,6 +77,14 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <div className="statsWrap">
+          <h1>Memory Game</h1>
+          <div className="stats">
+            <h3>{this.state.moves} Move(s)</h3>
+            <h3>0 mins 0 secs</h3>
+            <img className="reset" src={Reset}></img>
+          </div>
+        </div>
         <div className="board">
           {this.state.cards.map((card, index) => {
             return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;

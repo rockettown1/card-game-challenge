@@ -1,12 +1,13 @@
 .card-front {
   height: 150px;
   width: 150px;
-  background-color: blue;
+  background-color: #131313;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 7px 18px;
   border-radius: 5px;
+  box-shadow: 3px 3px 9px 0px rgb(44, 44, 44);
 }
 
 .card-back {
@@ -15,9 +16,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 7px 18px;
   overflow: hidden;
   border-radius: 5px;
+  box-shadow: 5px 5px 9px 0px rgb(44, 44, 44);
 }
 
 .card-image {
