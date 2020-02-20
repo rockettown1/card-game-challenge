@@ -74,6 +74,10 @@ class App extends Component {
     //you then need to decided where the best place to call this method is.
   };
 
+  restart = () => {
+    window.location.reload()
+  }
+
   render() {
     return (
       <div className="container">
@@ -82,7 +86,7 @@ class App extends Component {
           <div className="stats">
             <h3>{this.state.moves} Move(s)</h3>
             <h3>0 mins 0 secs</h3>
-            <img className="reset" src={Reset}></img>
+            <img onClick={this.restart} className="reset" src={Reset}></img>
           </div>
         </div>
         <div className="board">
