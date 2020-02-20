@@ -3,15 +3,33 @@ import Card from "./components/Card";
 import "./App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
+import DK from "./images/DonkeyKong.jpg";
+import Luigi from "./images/luigi.jpg";
+import Matt from "./images/matt.jpg";
+import Waluigi from "./images/waluigi.jpg";
+import Wario from "./images/Wario.jpg";
+import Yoshi from "./images/yoshi.jpg";
 
 class App extends Component {
   state = {
-    message: "match the cards to win the game",
     cards: [
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
       { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario }
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: Wario },
+      { flipped: false, image: Wario },
+      { flipped: false, image: Waluigi },
+      { flipped: false, image: Waluigi },
+      { flipped: false, image: Matt },
+      { flipped: false, image: Matt },
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Luigi },
+      { flipped: false, image: DK },
+      { flipped: false, image: DK }
+      
     ],
     firstFlip: null,
     secondFlip: null
@@ -56,11 +74,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="board">
-        {this.state.cards.map((card, index) => {
-          return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
-        })}
-        <p>{this.state.message}</p>
+      <div className="container">
+        <div className="board">
+          {this.state.cards.map((card, index) => {
+            return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
+          })}
+        </div>
       </div>
     );
   }
