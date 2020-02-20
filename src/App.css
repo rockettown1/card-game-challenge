@@ -1,6 +1,22 @@
+.container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .board {
-  max-width: 750px;
+  width: 770px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  background-color: #656465;
+  padding: 20px 0px;
+}
+.card-front {
+  background-color: #131313;
+  margin: 7px 18px;
+}
+.card-back {
+  margin: 7px 18px;
 }
