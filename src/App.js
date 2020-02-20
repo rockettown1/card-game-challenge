@@ -12,7 +12,7 @@ import Roy from "./images/roy-kooper.png";
 import Waluigi from "./images/waluigi.jpg";
 import Wario from "./images/Wario_MP100.png";
 import Yoshi from "./images/yoshi.png";
-import _, { shuffle } from "lodash"
+import _ from "lodash"
 
 class App extends Component {
   state = {
@@ -37,8 +37,9 @@ class App extends Component {
     ],
     firstFlip: null,
     secondFlip: null,
-    turn: 0,
-    loading: true
+    turn: 20,
+    loading: true,
+    youLose:false
   };
 
   componentDidMount() {
@@ -48,20 +49,20 @@ class App extends Component {
 
     setTimeout(()=> {
       this.setState({loading: false})
-    }, 2000)
+    }, 1000)
   }
 
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
     //object destructuring so I don't have to keep typing this.state.
-    const { firstFlip, secondFlip, cards, turn, message } = this.state;
+    const { firstFlip, secondFlip, cards, turn, youLose} = this.state;
 
     if (firstFlip != null && secondFlip !== null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
         this.setState({
           firstFlip: null,
           secondFlip: null,
-          turn: turn + 1,
+          turn: turn - 1,
           message: "It's a match"
         });
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
@@ -73,11 +74,14 @@ class App extends Component {
             cards: newCards,
             firstFlip: null,
             secondFlip: null,
-            turn: turn + 1,
-            message: "Match the cards to win the game!"
+            turn: turn - 1,
+            message: "Match the cards to win the game!",
           });
         }, 1000);
       }
+    }
+    if (turn === 0) {
+      this.setState({youLose:true})
     }
   }
 
@@ -121,7 +125,7 @@ class App extends Component {
                     key={index}
                     image={card.image}
                     flipped={card.flipped}
-                    click={() => this.flipHandler(index)}
+                    click={() =>this.flipHandler(index)}
                   />
                 );
               })}
