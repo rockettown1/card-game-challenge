@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "./components/Card";
+import Turn from "./components/Turn"
 import "./App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
@@ -15,7 +16,7 @@ class App extends Component {
     ],
     firstFlip: null,
     secondFlip: null,
-    turns: 1
+    turn: 0
   };
 
   flipHandler = index => {
@@ -39,6 +40,7 @@ class App extends Component {
       if (cards[firstFlip].image == cards[secondFlip].image) {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
+        this.setState({turn:this.state.turn +1})
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         setTimeout(()=>{
           let newCards = this.state.cards;
@@ -47,6 +49,7 @@ class App extends Component {
           this.setState({ cards: newCards, firstFlip: null, secondFlip: null })
         },1000)
       }
+      this.setState({turn:this.state.turn +1})
     }
     this.winningLogic();
   }
@@ -59,11 +62,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="board">
-        {this.state.cards.map((card, index) => {
-          return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
-        })}
-        <p>{this.state.message}</p>
+      <div className="app">
+        <Turn turn = {this.state.turn}/>
+        <div className="main">
+          {this.state.cards.map((card, index) => {
+            return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
+          })}
+          <p>{this.state.message}</p>
+        </div>
+        
       </div>
     );
   }
