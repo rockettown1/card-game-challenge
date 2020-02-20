@@ -40,18 +40,17 @@ class App extends Component {
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
     //object destructuring so I don't have to keep typing this.state.
-    const { firstFlip, secondFlip, cards, turn } = this.state;
+    const { firstFlip, secondFlip, cards, turn, message} = this.state;
 
     if (firstFlip != null && secondFlip !== null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
-        console.log("its a match");
-        this.setState({ firstFlip: null, secondFlip: null, turn: turn + 1});
+        this.setState({ firstFlip: null, secondFlip: null, turn: turn + 1, message:"It's a match"});
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         setTimeout(()=>{
           let newCards = this.state.cards;
           newCards[firstFlip].flipped = false;
           newCards[secondFlip].flipped = false;
-          this.setState({ cards: newCards, firstFlip: null, secondFlip: null, turn: turn + 1})
+          this.setState({ cards: newCards, firstFlip: null, secondFlip: null, turn: turn + 1, message:"Match the cards to win the game!"})
         },1000)
       }
     }
@@ -70,8 +69,8 @@ class App extends Component {
           {this.state.cards.map((card, index) => {
             return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
           })}
-          <p>{this.state.message}</p>
         </div>
+        <p>{this.state.message}</p>
         <Reset reset = {this.ResetButton}/>
         <div className = "winlose">
           {this.winningLogic() ? <Win/> : null}
