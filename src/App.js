@@ -53,14 +53,16 @@ class App extends Component {
     const { firstFlip, secondFlip, cards } = this.state;
 
     if (firstFlip != null && secondFlip != null) {
-      if (cards[firstFlip].image == cards[secondFlip].image) {
+      if (cards[firstFlip].image === cards[secondFlip].image) {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
-      } else if (cards[firstFlip].image != cards[secondFlip].image) {
-        let newCards = this.state.cards;
-        newCards[firstFlip].flipped = false;
-        newCards[secondFlip].flipped = false;
-        this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
+      } else if (cards[firstFlip].image !== cards[secondFlip].image) {
+        setTimeout(() => {
+          let newCards = this.state.cards;
+          newCards[firstFlip].flipped = false;
+          newCards[secondFlip].flipped = false;
+          this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
+        }, 1000);
       }
     }
     this.winningLogic();
@@ -86,6 +88,7 @@ class App extends Component {
           );
         })}
         <p>{this.state.message}</p>
+        <button className="reset">Click to reset game</button>
       </div>
     );
   }
