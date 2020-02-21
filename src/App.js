@@ -15,22 +15,22 @@ class App extends Component {
   state = {
     message: "match the cards to win the game",
     cards: [
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: ShyGuy },
+      { flipped: false, image: BowserJr },
+      { flipped: false, image: Morton },
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
+      { flipped: false, image: DonkeyKong },
+      { flipped: false, image: KingBoo },
+      { flipped: false, image: Waluigi},
+      { flipped: false, image: KingBoo },
+      { flipped: false, image: Morton },
       { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: BowserJr },
-      { flipped: false, image: BowserJr },
-      { flipped: false, image: DonkeyKong },
-      { flipped: false, image: DonkeyKong },
-      { flipped: false, image: KingBoo },
-      { flipped: false, image: KingBoo },
-      { flipped: false, image: Morton },
-      { flipped: false, image: Morton },
       { flipped: false, image: ShyGuy },
-      { flipped: false, image: ShyGuy },
+      { flipped: false, image: BowserJr },
       { flipped: false, image: Waluigi},
-      { flipped: false, image: Waluigi},
+      { flipped: false, image: DonkeyKong },
     ],
     firstFlip: null,
     secondFlip: null
@@ -58,6 +58,7 @@ class App extends Component {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
       } else if (cards[firstFlip].image != cards[secondFlip].image) {
+        
         let newCards = this.state.cards;
         newCards[firstFlip].flipped = false;
         newCards[secondFlip].flipped = false;
@@ -73,9 +74,15 @@ class App extends Component {
     //you then need to decided where the best place to call this method is.
   };
 
-  // restart = () => {
-  //   this.setState(())
-  // }
+  restart = () => {
+    let card = [...this.state.cards]
+    for(let i = 0; i < card.length; i++){
+      card[i].flipped = false
+    }
+    setTimeout(() => {
+        this.setState({cards: card})
+    }, 500); 
+  }
 
   render() {
     return (
@@ -86,7 +93,7 @@ class App extends Component {
         <div className="subTitle">
           <p className="info">Move(s) </p>
           <p className="info">0 Mins 0 Secs</p>
-          <img className="refresh" src={Refresh}/>
+          <img className="refresh" src={Refresh} onClick={this.restart}/>
         </div>
         <div className="board">
           {this.state.cards.map((card, index) => {
