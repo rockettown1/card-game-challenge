@@ -3,6 +3,7 @@ import Card from "./components/Card";
 import Turn from "./components/Turn";
 import Reset from "./components/Reset";
 import Win from "./components/Win";
+import Lose from "./components/Lose"
 import "./styles/App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
@@ -16,7 +17,7 @@ import _ from "lodash"
 
 class App extends Component {
   state = {
-    message: "Match the cards to win the game!",
+    message: "Match the cards to win the game! Run out of lives and you lose...",
     cards: [
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
@@ -37,9 +38,10 @@ class App extends Component {
     ],
     firstFlip: null,
     secondFlip: null,
-    turn: 20,
+    turn: 10,
     loading: true,
-    youLose:false
+    seconds: 0,
+    minutes: 0
   };
 
   componentDidMount() {
@@ -75,13 +77,10 @@ class App extends Component {
             firstFlip: null,
             secondFlip: null,
             turn: turn - 1,
-            message: "Match the cards to win the game!",
+            message: "Match the cards to win the game! Run out of lives and you lose...",
           });
         }, 1000);
       }
-    }
-    if (turn === 0) {
-      this.setState({youLose:true})
     }
   }
 
@@ -90,14 +89,18 @@ class App extends Component {
   };
 
   flipHandler = index => {
-    if (this.state.firstFlip === null) {
-      let newCards = this.state.cards;
-      newCards[index].flipped = true;
-      this.setState({ cards: newCards, firstFlip: index });
-    } else if (this.state.secondFlip === null) {
-      let newCards = this.state.cards;
-      newCards[index].flipped = true;
-      this.setState({ cards: newCards, secondFlip: index });
+    if (this.state.turn === 0) {
+      return
+    }else{
+      if (this.state.firstFlip === null) {
+        let newCards = this.state.cards;
+        newCards[index].flipped = true;
+        this.setState({ cards: newCards, firstFlip: index });
+      } else if (this.state.secondFlip === null) {
+        let newCards = this.state.cards;
+        newCards[index].flipped = true;
+        this.setState({ cards: newCards, secondFlip: index });
+      }
     }
   };
 
@@ -134,6 +137,7 @@ class App extends Component {
             <Reset reset={this.ResetButton} />
             <div className="winlose">
               {this.winningLogic() ? <Win /> : null}
+              {this.state.turn === 0 ? <Lose/> : null}
             </div>
           </>
         )}
