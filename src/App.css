@@ -62,3 +62,36 @@ h3{
   height: 20px;
   cursor: pointer;
 }
+.lose{
+  position: absolute;
+  background-color: white;
+  opacity: 0.4;
+  border-radius: 5px;
+  height: 696px;
+  width: 770px;
+  left: 0px;
+  top: 174px;
+  z-index: 3;
+}
+h2{
+  position: absolute;
+  font-family: "Finger Paint";
+  font-size: 80px;
+  color: red;
+  opacity: 1;
+  text-align: center;
+  z-index: 3;
+}
+small{
+  font-size: 20px;
+}
+.loseReset{
+  position: absolute;
+  z-index: 3;
+  left: 230px;
+  top: 350px;
+}
+
+.hide{
+  display: none;
+}

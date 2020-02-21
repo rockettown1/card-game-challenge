@@ -10,6 +10,7 @@ import Waluigi from "./images/waluigi.jpg";
 import Wario from "./images/Wario.jpg";
 import Yoshi from "./images/yoshi.jpg";
 import Reset from "./images/reset.png";
+import loseReset from "./images/looseRestart.png";
 
 class App extends Component {
   state = {
@@ -34,10 +35,14 @@ class App extends Component {
     ],
     firstFlip: null,
     secondFlip: null,
-    moves: 0
+    moves: 2,
+    count: 1,
+    lose: true
   };
 
   flipHandler = index => {
+    this.setState({count: this.state.count + 1 })
+    if(this.state.count%2 === 0){this.setState({moves: this.state.moves - 1 })}
     if (this.state.firstFlip == null) {
       let newCards = this.state.cards;
       newCards[index].flipped = true;
@@ -51,12 +56,17 @@ class App extends Component {
 
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
+    if (this.state.moves === 0) {
+      setTimeout(() =>{
+        this.setState({lose: !this.state.lose, moves: 7})
+      },1000) 
+    }
     //object destructuring so I don't have to keep typing this.state.
     const { firstFlip, secondFlip, cards } = this.state;
-
     if (firstFlip != null && secondFlip != null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
         console.log("its a match");
+        this.setState({moves: this.state.moves + 1 })
           this.setState({ firstFlip: null, secondFlip: null });
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         let newCards = this.state.cards;
@@ -82,9 +92,7 @@ class App extends Component {
     for(let i=0; i< card.length; i++){
       card[i].flipped = false
     }
-    setTimeout( () => {
-      this.setState({cards: card})
-    }, 1000)
+      this.setState({cards: card, lose: !this.state.lose})
   }
 
   render() {
@@ -93,12 +101,18 @@ class App extends Component {
         <div className="statsWrap">
           <h1>Memory Game</h1>
           <div className="stats">
-            <h3>{this.state.moves} Move(s)</h3>
+            <h3>{this.state.moves} Move(s) left</h3>
             <h3>0 mins 0 secs</h3>
             <img onClick={this.restart} className="reset" src={Reset} alt="restart"></img>
           </div>
         </div>
         <div className="board">
+
+          <div className={this.state.lose ? "lose hide" : "lose"}>
+            <h2>Your Memory Sucks</h2>
+            <img onClick={this.restart} className="loseReset" src={loseReset} alt="restart"></img>
+          </div>
+
           {this.state.cards.map((card, index) => {
             return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
           })}
