@@ -9,7 +9,7 @@ const Card = props => {
     <ReactCardFlip isFlipped={props.flipped} flipDirection="horizontal">
       <div className="card-front" onClick={props.click}></div>
       <div className="card-back">
-        <img className="card-image" src={props.image} />
+        <img className="card-image" src={props.image} alt="character"/>
       </div>
     </ReactCardFlip>
   );
