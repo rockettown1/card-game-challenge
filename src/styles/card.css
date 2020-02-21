@@ -15,11 +15,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 15px;
   overflow: hidden;
   border-radius: 5px;
 }
 
 .card-image {
   width: 150px;
+  background-color: white;
 }
