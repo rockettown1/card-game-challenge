@@ -16,6 +16,7 @@ import Yoshi from "./images/yoshi.png";
 import _ from "lodash";
 
 class App extends Component {
+  time = 0
   state = {
     message:
       "Match the cards to win the game! Run out of lives and you lose...",
@@ -43,7 +44,6 @@ class App extends Component {
     loading: true,
     seconds: 0,
     minutes: 0,
-    timer: false,
     win: false,
     lose: false
   };
@@ -60,9 +60,11 @@ class App extends Component {
 
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
+    if (this.state.win || this.state.lose) {
+      clearInterval(this.time)
+    }
     //object destructuring so I don't have to keep typing this.state.
     const { firstFlip, secondFlip, cards, turn } = this.state;
-
     if (firstFlip != null && secondFlip !== null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
         this.setState({
@@ -86,7 +88,6 @@ class App extends Component {
         }, 1000);
       }
     }
-    this.losingLogic()
   }
 
   ResetButton = () => {
@@ -104,11 +105,22 @@ class App extends Component {
       } else if (this.state.secondFlip === null) {
         let newCards = this.state.cards;
         newCards[index].flipped = true;
-        this.setState({ cards: newCards, secondFlip: index })
+        if (this.state.turn === 1) {
+          this.setState({ lose: true });
+          
+        }
+        this.setState({ cards: newCards, secondFlip: index });
       }
     }
+
+    this.winningLogic()
+  };
+
+  winningLogic = () => {
+    let cardState = this.state.cards;
+    this.setState({ win: cardState.every(x => x.flipped === true) })
     if (this.state.turn === 10) {
-      const time = setInterval(() => {
+      this.time = setInterval(() => {
         let seconds = this.state.seconds;
         let minutes = this.state.minutes;
         seconds++;
@@ -118,21 +130,6 @@ class App extends Component {
         }
         this.setState({ seconds: seconds, minutes: minutes });
       }, 1000);
-    }
-    this.winningLogic()
-    if (this.state.win || this.state.lose) {
-      clearInterval(this.time)
-    }
-  };
-
-  winningLogic = () => {
-    let cardState = this.state.cards;
-    this.setState({win:cardState.every(x => x.flipped === true)})
-  };
-
-  losingLogic = () => {
-    if (this.state.turn === 0) {
-      this.setState({lose:true})
     }
   };
 
