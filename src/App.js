@@ -3,7 +3,7 @@ import Card from "./components/Card";
 import Turn from "./components/Turn";
 import Reset from "./components/Reset";
 import Win from "./components/Win";
-import Lose from "./components/Lose"
+import Lose from "./components/Lose";
 import "./styles/App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
@@ -13,11 +13,12 @@ import Roy from "./images/roy-kooper.png";
 import Waluigi from "./images/waluigi.jpg";
 import Wario from "./images/Wario_MP100.png";
 import Yoshi from "./images/yoshi.png";
-import _ from "lodash"
+import _ from "lodash";
 
 class App extends Component {
   state = {
-    message: "Match the cards to win the game! Run out of lives and you lose...",
+    message:
+      "Match the cards to win the game! Run out of lives and you lose...",
     cards: [
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
@@ -41,30 +42,32 @@ class App extends Component {
     turn: 10,
     loading: true,
     seconds: 0,
-    minutes: 0
+    minutes: 0,
+    timer: false,
+    win: false,
+    lose: false
   };
 
   componentDidMount() {
-    let cards = this.state.cards
-    cards = _.shuffle(cards)
-    this.setState({cards: cards})
+    let cards = this.state.cards;
+    cards = _.shuffle(cards);
+    this.setState({ cards: cards });
 
-    setTimeout(()=> {
-      this.setState({loading: false})
-    }, 1000)
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 1000);
   }
 
   //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
     //object destructuring so I don't have to keep typing this.state.
-    const { firstFlip, secondFlip, cards, turn, youLose} = this.state;
+    const { firstFlip, secondFlip, cards, turn } = this.state;
 
     if (firstFlip != null && secondFlip !== null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
         this.setState({
           firstFlip: null,
           secondFlip: null,
-          turn: turn - 1,
           message: "It's a match"
         });
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
@@ -77,11 +80,13 @@ class App extends Component {
             firstFlip: null,
             secondFlip: null,
             turn: turn - 1,
-            message: "Match the cards to win the game! Run out of lives and you lose...",
+            message:
+              "Match the cards to win the game! Run out of lives and you lose..."
           });
         }, 1000);
       }
     }
+    this.losingLogic()
   }
 
   ResetButton = () => {
@@ -90,28 +95,46 @@ class App extends Component {
 
   flipHandler = index => {
     if (this.state.turn === 0) {
-      return
-    }else{
+      return;
+    } else {
       if (this.state.firstFlip === null) {
         let newCards = this.state.cards;
         newCards[index].flipped = true;
-        this.setState({ cards: newCards, firstFlip: index });
+        this.setState({ cards: newCards, firstFlip: index, timer: true });
       } else if (this.state.secondFlip === null) {
         let newCards = this.state.cards;
         newCards[index].flipped = true;
-        this.setState({ cards: newCards, secondFlip: index });
+        this.setState({ cards: newCards, secondFlip: index })
       }
+    }
+    if (this.state.turn === 10) {
+      const time = setInterval(() => {
+        let seconds = this.state.seconds;
+        let minutes = this.state.minutes;
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
+        }
+        this.setState({ seconds: seconds, minutes: minutes });
+      }, 1000);
+    }
+    this.winningLogic()
+    if (this.state.win || this.state.lose) {
+      clearInterval(this.time)
     }
   };
 
-  
-
   winningLogic = () => {
     let cardState = this.state.cards;
-    return cardState.every(x => x.flipped === true);
+    this.setState({win:cardState.every(x => x.flipped === true)})
   };
 
-
+  losingLogic = () => {
+    if (this.state.turn === 0) {
+      this.setState({lose:true})
+    }
+  };
 
   render() {
     return (
@@ -120,7 +143,11 @@ class App extends Component {
           <h1>Loading...</h1>
         ) : (
           <>
-            <Turn turn={this.state.turn} />
+            <Turn
+              turn={this.state.turn}
+              minutes={this.state.minutes}
+              seconds={this.state.seconds}
+            />
             <div className="main">
               {this.state.cards.map((card, index) => {
                 return (
@@ -128,7 +155,7 @@ class App extends Component {
                     key={index}
                     image={card.image}
                     flipped={card.flipped}
-                    click={() =>this.flipHandler(index)}
+                    click={() => this.flipHandler(index)}
                   />
                 );
               })}
@@ -136,8 +163,8 @@ class App extends Component {
             <p>{this.state.message}</p>
             <Reset reset={this.ResetButton} />
             <div className="winlose">
-              {this.winningLogic() ? <Win /> : null}
-              {this.state.turn === 0 ? <Lose/> : null}
+              {this.state.win ? <Win /> : null}
+              {this.state.lose ? <Lose /> : null}
             </div>
           </>
         )}
