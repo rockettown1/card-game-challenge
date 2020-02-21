@@ -15,20 +15,20 @@ class App extends Component {
   state = {
     cards: [
       { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Matt },
       { flipped: false, image: BabyMario },
       { flipped: false, image: Yoshi },
-      { flipped: false, image: Yoshi },
-      { flipped: false, image: Wario },
+      { flipped: false, image: Waluigi },
       { flipped: false, image: Wario },
       { flipped: false, image: Waluigi },
-      { flipped: false, image: Waluigi },
-      { flipped: false, image: Matt },
-      { flipped: false, image: Matt },
-      { flipped: false, image: Luigi },
-      { flipped: false, image: Luigi },
       { flipped: false, image: DK },
+      { flipped: false, image: Matt },
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Wario },
       { flipped: false, image: DK }
       
     ],
@@ -55,14 +55,17 @@ class App extends Component {
     const { firstFlip, secondFlip, cards } = this.state;
 
     if (firstFlip != null && secondFlip != null) {
-      if (cards[firstFlip].image == cards[secondFlip].image) {
+      if (cards[firstFlip].image === cards[secondFlip].image) {
         console.log("its a match");
-        this.setState({ firstFlip: null, secondFlip: null });
-      } else if (cards[firstFlip].image != cards[secondFlip].image) {
+          this.setState({ firstFlip: null, secondFlip: null });
+      } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         let newCards = this.state.cards;
         newCards[firstFlip].flipped = false;
         newCards[secondFlip].flipped = false;
-        this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
+        setTimeout(() => {
+          this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
+        }, 1000);
+        
       }
     }
     this.winningLogic();
@@ -75,7 +78,13 @@ class App extends Component {
   };
 
   restart = () => {
-    window.location.reload()
+    let card = [...this.state.cards]
+    for(let i=0; i< card.length; i++){
+      card[i].flipped = false
+    }
+    setTimeout( () => {
+      this.setState({cards: card})
+    }, 1000)
   }
 
   render() {
@@ -86,7 +95,7 @@ class App extends Component {
           <div className="stats">
             <h3>{this.state.moves} Move(s)</h3>
             <h3>0 mins 0 secs</h3>
-            <img onClick={this.restart} className="reset" src={Reset}></img>
+            <img onClick={this.restart} className="reset" src={Reset} alt="restart"></img>
           </div>
         </div>
         <div className="board">
