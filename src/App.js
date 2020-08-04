@@ -48,6 +48,27 @@ class App extends Component {
     this.winningLogic();
   }
 
+  isCardMatch = (card1, card2, card1Id, card2Id) => {
+    if (card1 === card2) {
+      const hideCard = this.state.shuffledCard.slice();
+      hideCard[card1Id] = -1;
+      hideCard[card2Id] = -1;
+      setTimeout(() => {
+        this.setState(prevState => ({
+          shuffledCard: hideCard
+        }))
+      }, 1000);
+    } else {
+      const flipBack = this.state.isFlipped.slice();
+      flipBack[card1Id] = false;
+      flipBack[card2Id] = false;
+      setTimeout(() => {
+        this.setState(prevState => ({ isFlipped: flipBack }));
+      }, 1000);
+    }
+  };
+
+
   winningLogic = () => {
     //write a function that determines a winner (every card is turned over)
     //there's an array method called -every- which you might want to look up.
