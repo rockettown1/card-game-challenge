@@ -1,32 +1,13 @@
 import React from "react";
-
-// class Score extends Component {
-// constructor(props) {
-// super(props);
-// this.state = {score: 0}
-// }
-
-// increaseScore() {
-// this.setState({
-// score: this.state.score + 1
-// });
-// }
-// render() {
-// return (
-// <h1>{this.state.score}</h1>
-// <button onClick={this.increaseScore}> +1 </button>
-// )
-
-// }
-
-// export default Score;
+import "./Score.css"
 
 const Score = props => {
 
     return (
-        <div>
-            <h1>Score: {props.score}</h1>
-            <h1>Turns: {props.count}</h1>
+        <div className="scoreTurns">
+            <h2>Score: {props.score}</h2>
+            <h2>Turns: {props.count}</h2>
+            <h2>Timer: {props.timer}</h2>
         </div>
     )
 }
