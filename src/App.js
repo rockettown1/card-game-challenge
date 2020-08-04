@@ -47,10 +47,10 @@ class App extends Component {
     const { firstFlip, secondFlip, cards } = this.state;
 
     if (firstFlip != null && secondFlip != null) {
-      if (cards[firstFlip].image == cards[secondFlip].image) {
+      if (cards[firstFlip].image === cards[secondFlip].image) {
         console.log("its a match");
         this.setState({ firstFlip: null, secondFlip: null });
-      } else if (cards[firstFlip].image != cards[secondFlip].image) {
+      } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         let newCards = this.state.cards;
         newCards[firstFlip].flipped = false;
         newCards[secondFlip].flipped = false;
@@ -70,21 +70,29 @@ class App extends Component {
     //you then need to decided where the best place to call this method is.
   };
 
+  restartHandler = () => {
+    for (let i = 0; i < this.state.cards.length; i++) {
+      this.setState((state) => {
+        let newState = JSON.parse(JSON.stringify(state));
+        newState.cards[i].flipped = false;
+        return ({
+          cards: newState.cards
+        });
+      });
+    }
+  }
+
   render() {
     return (
-      <div className="board">
-        {this.state.cards.map((card, index) => {
-          return (
-            <Card
-              key={index}
-              image={card.image}
-              flipped={card.flipped}
-              click={() => this.flipHandler(index)}
-            />
-          );
-        })}
-        <p>{this.state.message}</p>
-      </div>
+      <div className="board" >
+        {
+          this.state.cards.map((card, index) => {
+            return <Card key={index} image={card.image} flipped={card.flipped} click={() => this.flipHandler(index)} />;
+          })
+        }
+        < p > {this.state.message}</p>
+        <button onClick={this.restartHandler}>RESTART</button>
+      </div >
     );
   }
 }
