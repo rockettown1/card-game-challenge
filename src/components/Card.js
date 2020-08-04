@@ -12,7 +12,7 @@ const Card = props => {
       </div>
 
       <div className="card-back">
-        <img className="card-image" src={props.image} />
+        <img className="card-image" src={props.image} alt="" />
       </div>
     </ReactCardFlip>
   );
