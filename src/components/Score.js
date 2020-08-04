@@ -24,7 +24,10 @@ import React from "react";
 const Score = props => {
 
     return (
-        <h1>{props.score}</h1>
+        <div>
+            <h1>Score: {props.score}</h1>
+            <h1>Turns: {props.count}</h1>
+        </div>
     )
 }
 

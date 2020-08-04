@@ -29,51 +29,40 @@ class App extends Component {
     firstFlip: null,
     secondFlip: null,
     score: 0,
-    count: 1
+    count: 24
   };
 
   flipHandler = index => {
     if (this.state.firstFlip == null) {
+      this.decreaseCount();
       let newCards = this.state.cards;
       newCards[index].flipped = true;
-      this.increaseCount();
       this.setState({ cards: newCards, firstFlip: index });
     } else if (this.state.secondFlip == null) {
+      this.decreaseCount();
       let newCards = this.state.cards;
       newCards[index].flipped = true;
-      this.increaseCount();
       this.setState({ cards: newCards, secondFlip: index });
     }
-    this.checkerFunction();
+    this.checkGameWon();
   };
 
-  //this is a React Lifecycle method - read the docs
   componentDidUpdate() {
-    //object destructuring so I don't have to keep typing this.state.
     const { firstFlip, secondFlip, cards } = this.state;
 
     if (firstFlip != null && secondFlip != null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
-        console.log("its a match");
         this.increaseScore();
         this.setState({ firstFlip: null, secondFlip: null });
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         let newCards = this.state.cards;
-        this.bugFix(newCards);
+        this.secondFlipShown(newCards);
       }
     }
+    this.checkGameLost();
   }
 
-
-  checkerFunction = () => {
-    const checker = this.state.cards.every(cards => cards.flipped == true);
-    console.log(checker)
-    if (checker == true) {
-      this.winningLogic();
-    }
-  }
-
-  bugFix = (newCards) => {
+  secondFlipShown = (newCards) => {
     setTimeout(() => {
       newCards[this.state.firstFlip].flipped = false;
       newCards[this.state.secondFlip].flipped = false;
@@ -85,9 +74,38 @@ class App extends Component {
     }, 1000)
   }
 
+  increaseScore = () => {
+    this.setState({ score: this.state.score + 1 });
+  };
+
+  decreaseCount = () => {
+    this.setState({ count: this.state.count - 1 });
+    console.log(this.state.count)
+  };
+
+  checkGameLost = () => {
+    if (this.state.count === 0) {
+      this.setState({ firstFlip: null, secondFlip: null })
+      this.gameOverLogic();
+    }
+  }
+
+  checkGameWon = () => {
+    const checker = this.state.cards.every(cards => cards.flipped === true);
+    if (checker === true) {
+      this.winningLogic();
+    }
+  }
+
   winningLogic = () => {
     prompt('You Win!')
+    this.restartHandler();
   };
+
+  gameOverLogic = () => {
+    prompt("YOU LOST")
+    this.restartHandler();
+  }
 
   restartHandler = () => {
     for (let i = 0; i < this.state.cards.length; i++) {
@@ -99,26 +117,13 @@ class App extends Component {
         };
       });
     }
-    this.setState({ count: 1 })
-  };
-
-  increaseScore = () => {
-    this.setState({ score: this.state.score + 1 });
-  };
-
-  increaseCount = () => {
-    this.setState({ count: this.state.count + 1 });
-    console.log(this.state.count)
-    if (this.state.count == 5) {
-      alert("GAME OVER");
-      this.restartHandler();
-    }
+    this.setState({ count: 24, score: 0 })
   };
 
   render() {
     return (
       <div className="board">
-        <Score score={this.state.score} />
+        <Score score={this.state.score} count={this.state.count} />
         {this.state.cards.map((card, index) => {
           return (
             <Card
@@ -129,7 +134,7 @@ class App extends Component {
             />
           );
         })}
-        <p> {this.state.message}</p>
+        <p> {this.state.message} </p>
         <button onClick={this.restartHandler}>RESTART</button>
       </div>
     );
