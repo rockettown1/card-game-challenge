@@ -44,6 +44,7 @@ class App extends Component {
       this.increaseCount();
       this.setState({ cards: newCards, secondFlip: index });
     }
+    this.checkerFunction();
   };
 
   //this is a React Lifecycle method - read the docs
@@ -61,7 +62,15 @@ class App extends Component {
         this.bugFix(newCards);
       }
     }
-    this.winningLogic();
+  }
+
+
+  checkerFunction = () => {
+    const checker = this.state.cards.every(cards => cards.flipped == true);
+    console.log(checker)
+    if (checker == true) {
+      this.winningLogic();
+    }
   }
 
   bugFix = (newCards) => {
@@ -77,9 +86,7 @@ class App extends Component {
   }
 
   winningLogic = () => {
-    //write a function that determines a winner (every card is turned over)
-    //there's an array method called -every- which you might want to look up.
-    //you then need to decided where the best place to call this method is.
+    prompt('You Win!')
   };
 
   restartHandler = () => {
