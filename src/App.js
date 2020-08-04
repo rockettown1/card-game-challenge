@@ -11,13 +11,25 @@ class App extends Component {
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
       { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario }
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: BabyMario },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: BabyMario },
     ],
     firstFlip: null,
-    secondFlip: null
+    secondFlip: null,
   };
 
-  flipHandler = index => {
+  flipHandler = (index) => {
     if (this.state.firstFlip == null) {
       let newCards = this.state.cards;
       newCards[index].flipped = true;
@@ -42,7 +54,11 @@ class App extends Component {
         let newCards = this.state.cards;
         newCards[firstFlip].flipped = false;
         newCards[secondFlip].flipped = false;
-        this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
+        this.setState({
+          cards: newCards,
+          firstFlip: null,
+          secondFlip: null,
+        });
       }
     }
     this.winningLogic();
