@@ -1,6 +1,11 @@
+* {
+  font-family: "Lobster", cursive;
+}
+
 .board {
   max-width: 750px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-left: 340px;
 }

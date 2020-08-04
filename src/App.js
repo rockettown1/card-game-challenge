@@ -6,7 +6,7 @@ import BabyMario from "./images/babymario.jpg";
 
 class App extends Component {
   state = {
-    message: "match the cards to win the game",
+    message: "Match the cards to win the game",
     cards: [
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
