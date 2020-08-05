@@ -3,29 +3,37 @@ import Card from "./components/Card";
 import "./App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
-import Confetti from "./components/Confetti";
+import Wario from "./images/wario.jpg";
+import Yoshi from "./images/yoshi.jpg";
+import Toad from "./images/toad.jpg";
+import DK from "./images/DK.jpg";
+import Luigi from "./images/luigi.jpg";
+import Peach from "./images/peach.jpg";
 import Score from "./components/Score";
+import Confetti from "react-dom-confetti";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 
 class App extends Component {
   state = {
     message: "Match the cards to win the game",
     cards: [
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Toad },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: Peach },
+      { flipped: false, image: Wario },
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
+      { flipped: false, image: DK },
       { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: Wario },
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Peach },
+      { flipped: false, image: Toad },
+      { flipped: false, image: DK },
     ],
     firstFlip: null,
     secondFlip: null,
@@ -129,7 +137,15 @@ class App extends Component {
   };
 
   render() {
-    const { score, count, timer, cards, message } = this.state;
+    const {
+      score,
+      count,
+      timer,
+      cards,
+      message,
+      openWinModal,
+      openLoseModal,
+    } = this.state;
     return (
       <div className="board">
         <div className="header">
@@ -137,21 +153,37 @@ class App extends Component {
             <h1>MEMORY GAME</h1>
           </div>
           <div className="messages">
+            <Confetti active={this.state.active} />
             <Score score={score} count={count} timer={timer} />
           </div>
           <button onClick={this.startGame}>START GAME</button>
         </div>
+        <Confetti active={this.state.active} />
+        <Modal open={openWinModal} onClose={this.restartHandler} center>
+          <h2>Winner Winner</h2>
+          <img
+            src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg"
+            alt="chicken dinner"
+          />
+        </Modal>
+        <Modal open={openLoseModal} onClose={this.restartHandler} center>
+          <h2>You Lost</h2>
+        </Modal>
         <div className="mainBody">
           {cards.map((card, index) => {
             return (
-              <Card
-                key={index}
-                image={card.image}
-                flipped={card.flipped}
-                click={() => this.flipHandler(index)}
-              />
+              <>
+                <Confetti active={this.state.active} />
+                <Card
+                  key={index}
+                  image={card.image}
+                  flipped={card.flipped}
+                  click={() => this.flipHandler(index)}
+                />
+              </>
             );
           })}
+          <Confetti active={this.state.active} />
         </div>
         <p> {message} </p>
         <button className="restartButton" onClick={this.restartHandler}>
