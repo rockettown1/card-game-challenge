@@ -3,31 +3,38 @@ import Card from "./components/Card";
 import "./App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
+import Wario from "./images/wario.jpg";
+import Yoshi from "./images/yoshi.jpg";
+import Toad from "./images/toad.jpg";
+import DK from "./images/DK.jpg";
+import Luigi from "./images/luigi.jpg";
+import Peach from "./images/peach.jpg";
 import Score from "./components/Score";
-import Confetti from 'react-dom-confetti';
-import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
+import Confetti from "react-dom-confetti";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
+
 
 class App extends Component {
   state = {
     message: "Match the cards to win the game",
     cards: [
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Toad },
+      { flipped: false, image: Bowser },
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: Peach },
+      { flipped: false, image: Wario },
       { flipped: false, image: Bowser },
       { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
+      { flipped: false, image: DK },
       { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario },
-      { flipped: false, image: Bowser },
-      { flipped: false, image: BabyMario }
+      { flipped: false, image: Yoshi },
+      { flipped: false, image: Wario },
+      { flipped: false, image: Luigi },
+      { flipped: false, image: Peach },
+      { flipped: false, image: Toad },
+      { flipped: false, image: DK },
     ],
     firstFlip: null,
     secondFlip: null,
@@ -132,12 +139,35 @@ class App extends Component {
           <button className="start-button" onClick={this.startGame}>START GAME</button>
         </div>
         <Confetti active={this.state.active} />
-        <Modal open={openWinModal} onClose={this.restartHandler} center>
+        <Modal open={openWinModal} onClose={this.restartHandler} center styles={{
+          modal: {
+            width: "400px",
+            height: "300px",
+            borderRadius: "15%",
+            fontFamily: "'Lemonada', cursive",
+            color: "#fff",
+            backgroundImage: "url(https://www.snopes.com/tachyon/2015/07/fireworks.png?resize=836,452)",
+            animation: `${
+              openWinModal ? 'spinIn' : 'spinOut'
+              } 2000ms`,
+          },
+        }}>
           <h2>Winner Winner</h2>
           <img src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg" alt="chicken dinner" />
         </Modal>
-        <Modal open={openLoseModal} onClose={this.restartHandler} center>
-          <h2>You Lost</h2>
+        <Modal open={openLoseModal} onClose={this.restartHandler} center styles={{
+          modal: {
+            width: "400px",
+            height: "300px",
+            borderRadius: "15%",
+            fontFamily: "'Lemonada', cursive",
+            backgroundImage: "url(https://media1.giphy.com/media/mcH0upG1TeEak/200.gif)",
+            backgroundSize: "100% 100%",
+            animation: `${
+              openWinModal ? 'spinIn' : 'spinOut'
+              } 2000ms`,
+          },
+        }}>
         </Modal>
         <div className="mainBody">
           {cards.map((card, index) => {

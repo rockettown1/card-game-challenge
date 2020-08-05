@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Lemonada&display=swap');
+* {
+  font-family: "Lobster", cursive;
+}
 
 .board {
   margin: auto auto;
@@ -10,6 +12,7 @@
   background-image: linear-gradient(to bottom right, #e62310, #009bd9, #44af35, #fccf00);
   background-color: #888;
   border-radius: 5%;
+  margin-left: 340px;
 }
 
 .header {
@@ -41,7 +44,7 @@
   font-size: 24px;
   margin-left: 30px;
   color: #fff;
-  font-family: 'Lemonada', cursive;
+  font-family: "Lemonada", cursive;
 }
 
 .restartButton:focus {
@@ -64,3 +67,82 @@
 .memory {
   color: #FE0002, #0001FC, #FFD987, #6A0400;
 }
+
+@keyframes spinIn {
+  0% {
+    transform: rotate(0deg);
+    transform: scale(0.05, 0.05);
+  }
+  12.5% {
+    transform: scale(0.125, 0.125);
+    transform: rotate(90deg);
+  }
+  25% {
+    transform: scale(0.25, 0.25);
+    transform: rotate(180deg);
+  }
+  37.5% {
+    transform: scale(0.375, 0.375);
+    transform: rotate(270deg);
+  }
+  50% {
+    transform: scale(0.5, 0.5); 
+    transform: rotate(360deg);
+  }
+  62.5% {
+    transform: scale(0.625, 0.625);
+    transform: rotate(270deg);
+  }
+  75% {
+    transform: scale(0.75, 0.75);
+    transform: rotate(180deg);
+  }
+  87.5% {
+    transform: scale(0.875, 0.875);
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: scale(1, 1); 
+    transform: rotate(0deg)
+  }
+}
+
+@keyframes spinOut {
+  0% {
+    transform: rotate(0deg);
+    transform: scale(0.05, 0.05);
+  }
+  12.5% {
+    transform: scale(0.125, 0.125);
+    transform: rotate(90deg);
+  }
+  25% {
+    transform: scale(0.25, 0.25);
+    transform: rotate(180deg);
+  }
+  37.5% {
+    transform: scale(0.375, 0.375);
+    transform: rotate(270deg);
+  }
+  50% {
+    transform: scale(0.5, 0.5); 
+    transform: rotate(360deg);
+  }
+  62.5% {
+    transform: scale(0.625, 0.625);
+    transform: rotate(270deg);
+  }
+  75% {
+    transform: scale(0.75, 0.75);
+    transform: rotate(180deg);
+  }
+  87.5% {
+    transform: scale(0.875, 0.875);
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: scale(1, 1); 
+    transform: rotate(0deg)
+  }
+}
+
