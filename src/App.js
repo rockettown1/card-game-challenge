@@ -44,6 +44,7 @@ class App extends Component {
   startGame = () => {
     this.intervalID = setInterval(() => {
       this.setState({ timer: this.state.timer - 1 })
+      this.checkGameLost()
     }, 1000)
   }
 
@@ -78,7 +79,6 @@ class App extends Component {
         }, 1000)
       }
     }
-    this.checkGameLost()
   }
 
   increaseScore = () => {
@@ -118,7 +118,6 @@ class App extends Component {
   }
 
   render() {
-
     const { score, count, timer, cards, message, openWinModal, openLoseModal } = this.state;
     return (
       <div className="board">
