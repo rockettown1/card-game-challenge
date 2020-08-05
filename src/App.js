@@ -14,6 +14,7 @@ import Confetti from "react-dom-confetti";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
+
 class App extends Component {
   state = {
     message: "Match the cards to win the game",
@@ -40,15 +41,20 @@ class App extends Component {
     score: 0,
     count: 24,
     timer: 20,
-  };
+    active: false,
+    openWinModal: false,
+    openLoseModal: false
+  }
+
 
   intervalID = 0;
 
   startGame = () => {
     this.intervalID = setInterval(() => {
-      this.setState({ timer: this.state.timer - 1 });
-    }, 1000);
-  };
+      this.setState({ timer: this.state.timer - 1 })
+      this.checkGameLost()
+    }, 1000)
+  }
 
   flipHandler = (index) => {
     const { firstFlip, secondFlip } = this.state;
@@ -67,8 +73,7 @@ class App extends Component {
   };
 
   componentDidUpdate() {
-    this.checkGameLost();
-    const { firstFlip, secondFlip, cards } = this.state;
+    const { firstFlip, secondFlip, cards } = this.state
     if (firstFlip != null && secondFlip != null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
         this.increaseScore();
@@ -96,15 +101,21 @@ class App extends Component {
   checkGameLost = () => {
     if (this.state.count === 0 || this.state.timer === 0) {
       this.gameOverLogic();
+      this.setState({ openLoseModal: true })
     }
   };
 
   checkGameWon = () => {
     const checker = this.state.cards.every((cards) => cards.flipped === true);
     if (checker === true) {
+
       this.winningLogic();
+
+      this.setState({ active: true, openWinModal: true, timer: 6000 })
+
     }
   };
+
 
   winningLogic = () => {
     alert("You Win!");
@@ -126,6 +137,7 @@ class App extends Component {
         };
       });
     }
+
     this.setState({
       count: 24,
       score: 0,
@@ -146,6 +158,14 @@ class App extends Component {
       openWinModal,
       openLoseModal,
     } = this.state;
+
+    this.setState({ count: 24, score: 0, firstFlip: null, secondFlip: null, timer: 20, openWinModal: false, openLoseModal: false })
+    clearInterval(this.intervalID)
+  }
+
+  render() {
+    const { score, count, timer, cards, message, openWinModal, openLoseModal } = this.state;
+
     return (
       <div className="board">
         <div className="header">
@@ -161,10 +181,12 @@ class App extends Component {
         <Confetti active={this.state.active} />
         <Modal open={openWinModal} onClose={this.restartHandler} center>
           <h2>Winner Winner</h2>
+
           <img
             src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg"
             alt="chicken dinner"
           />
+
         </Modal>
         <Modal open={openLoseModal} onClose={this.restartHandler} center>
           <h2>You Lost</h2>
