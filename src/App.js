@@ -129,7 +129,7 @@ class App extends Component {
       <div className="board">
         <div className="header">
           <div className="title">
-            <h1>MEMORY GAME</h1>
+            <h1 className='memory'>MEMORY GAME</h1>
           </div>
           <div className="messages">
             <Confetti active={this.state.active} />
