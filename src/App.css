@@ -3,9 +3,46 @@
 }
 
 .board {
+  margin: auto auto;
   max-width: 750px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin-left: 340px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+}
+
+.messages {
+  display: flex;
+  flex-direction: row;
+}
+
+.mainBody {
+  max-width: 750px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.restartButton {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  margin-left: 30px;
+  color: #fff;
+  font-family: "Lemonada", cursive;
+}
+
+.restartButton:focus {
+  outline: none;
 }

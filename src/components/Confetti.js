@@ -15,6 +15,6 @@ const config = {
   colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
 };
 
-return <Confetti active { XXXX } config={ config } />;
+return <Confetti active={checker} config={config} />;
 
 export default Confetti;
