@@ -113,7 +113,7 @@ class App extends Component {
         }
       })
     }
-    this.setState({ count: 24, score: 0, firstFlip: null, secondFlip: null, timer: 20, open: false })
+    this.setState({ count: 24, score: 0, firstFlip: null, secondFlip: null, timer: 20, openWinModal: false, openLoseModal: false })
     clearInterval(this.intervalID)
   }
 
