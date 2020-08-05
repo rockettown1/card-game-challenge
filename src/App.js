@@ -93,13 +93,15 @@ class App extends Component {
   checkGameLost = () => {
     if (this.state.count === 0 || this.state.timer === 0) {
       this.setState({ openLoseModal: true })
+      clearInterval(this.intervalID)
     }
   }
 
   checkGameWon = () => {
     const checker = this.state.cards.every(cards => cards.flipped === true);
     if (checker === true) {
-      this.setState({ active: true, openWinModal: true, timer: 6000 })
+      this.setState({ active: true, openWinModal: true })
+      clearInterval(this.intervalID)
     }
   }
 
@@ -126,18 +128,47 @@ class App extends Component {
             <h1>MEMORY GAME</h1>
           </div>
           <div className="messages">
-            <Confetti active={this.state.active} />
             <Score score={score} count={count} timer={timer} />
           </div>
           <button onClick={this.startGame}>START GAME</button>
         </div>
-        <Confetti active={this.state.active} />
-        <Modal open={openWinModal} onClose={this.restartHandler} center>
+        <Modal
+          open={openWinModal}
+          onClose={this.restartHandler}
+          center
+          styles={{
+            modal: {
+              width: "400px",
+              height: "300px",
+              borderRadius: "15%",
+              fontFamily: "'Lemonada', cursive",
+              color: "#fff",
+              backgroundImage: "url(https://www.snopes.com/tachyon/2015/07/fireworks.png?resize=836,452)",
+              animation: `${
+                openWinModal ? 'spinIn' : 'spinOut'
+                } 2000ms`,
+            },
+          }}>
           <h2>Winner Winner</h2>
-          <img src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg" alt="chicken dinner" />
         </Modal>
-        <Modal open={openLoseModal} onClose={this.restartHandler} center>
-          <h2>You Lost</h2>
+        <Modal
+          open={openLoseModal}
+          onClose={this.restartHandler}
+          center
+          styles={{
+            modal: {
+              width: "400px",
+              height: "300px",
+              borderRadius: "15%",
+              fontFamily: "'Lemonada', cursive",
+              backgroundImage: "url(https://media1.giphy.com/media/mcH0upG1TeEak/200.gif)",
+              backgroundSize: "100% 100%",
+              animation: `${
+                openWinModal ? 'spinIn' : 'spinOut'
+                } 2000ms`,
+            },
+          }}>
+          <h2></h2>
         </Modal>
         <div className="mainBody">
           {cards.map((card, index) => {
@@ -153,7 +184,6 @@ class App extends Component {
               </>
             );
           })}
-          <Confetti active={this.state.active} />
         </div>
         <p> {message} </p>
         <button className="restartButton" onClick={this.restartHandler}>RESTART</button>
