@@ -74,28 +74,6 @@ class App extends Component {
     }, 1000)
   }
 
-<<<<<<< HEAD
-  isCardMatch = (card1, card2, card1Id, card2Id) => {
-    if (card1 === card2) {
-      const hideCard = this.state.shuffledCard.slice();
-      hideCard[card1Id] = -1;
-      hideCard[card2Id] = -1;
-      setTimeout(() => {
-        this.setState(prevState => ({
-          shuffledCard: hideCard
-        }))
-      }, 1000);
-    } else {
-      const flipBack = this.state.isFlipped.slice();
-      flipBack[card1Id] = false;
-      flipBack[card2Id] = false;
-      setTimeout(() => {
-        this.setState(prevState => ({ isFlipped: flipBack }));
-      }, 1000);
-    }
-  };
-
-=======
   increaseScore = () => {
     this.setState({ score: this.state.score + 1 });
   };
@@ -118,7 +96,6 @@ class App extends Component {
       this.winningLogic();
     }
   }
->>>>>>> 1048b88d21945692ebad0c37d7ee39fc1b9d6744
 
   winningLogic = () => {
     prompt('You Win!')
