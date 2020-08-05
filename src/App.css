@@ -39,7 +39,7 @@
   cursor: pointer;
   font-size: 24px;
   margin-left: 30px;
-  color: #fff;
+  color: #000;
   font-family: "Lemonada", cursive;
 }
 
@@ -125,30 +125,3 @@
   }
 }
 
-/* styles={{
-  modal: {
-    width: "400px",
-    height: "300px",
-    borderRadius: "15%",
-    fontFamily: "'Lemonada', cursive",
-    color: "#fff",
-    backgroundImage: "url(https://www.snopes.com/tachyon/2015/07/fireworks.png?resize=836,452)",
-    animation: `${
-      openWinModal ? 'spinIn' : 'spinOut'
-      } 2000ms`,
-  },
-}}>
-
-styles={{
-  modal: {
-    width: "400px",
-    height: "300px",
-    borderRadius: "15%",
-    fontFamily: "'Lemonada', cursive",
-    backgroundImage: "url(https://media1.giphy.com/media/mcH0upG1TeEak/200.gif)",
-    backgroundSize: "100% 100%",
-    animation: `${
-      openWinModal ? 'spinIn' : 'spinOut'
-      } 2000ms`,
-  },
-}}> */

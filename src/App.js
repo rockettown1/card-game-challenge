@@ -14,7 +14,6 @@ import Confetti from "react-dom-confetti";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
-
 class App extends Component {
   state = {
     message: "Match the cards to win the game",
@@ -153,7 +152,6 @@ class App extends Component {
           },
         }}>
           <h2>Winner Winner</h2>
-          <img src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg" alt="chicken dinner" />
         </Modal>
         <Modal open={openLoseModal} onClose={this.restartHandler} center styles={{
           modal: {
