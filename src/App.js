@@ -3,6 +3,7 @@ import Card from "./components/Card";
 import "./App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
+import config from "./components/Confetti";
 
 class App extends Component {
   state = {
