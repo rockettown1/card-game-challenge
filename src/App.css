@@ -1,5 +1,5 @@
 * {
-  font-family: "Lobster", cursive;
+  font-family: "Lobster", cursive, 'Century Gothic', CenturyGothic, AppleGothic;
 }
 
 .board {
@@ -15,6 +15,12 @@
   margin-left: 340px;
 }
 
+.grid-container {
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px 150px 10px 150px;
+}
 .header {
   display: flex;
   flex-direction: column;

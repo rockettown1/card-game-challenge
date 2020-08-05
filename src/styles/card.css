@@ -2,12 +2,13 @@
   height: 150px;
   width: 150px;
   background-color: #43eb34;
-  background-color: #221e1e;
+  background-color:	#C0C0C0;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 5px;
   border-radius: 5px;
+
 }
 
 .card-front:hover {
