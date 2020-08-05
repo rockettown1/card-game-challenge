@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Lemonada&display=swap');
+* {
+  font-family: "Lobster", cursive;
+}
 
 .board {
   margin: auto auto;
@@ -6,10 +8,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  font-family: 'Lemonada', cursive;
-  color: #fff;
-  background-color: #888;
-  border-radius: 5%;
+  margin-left: 340px;
 }
 
 .header {
@@ -41,17 +40,11 @@
   font-size: 24px;
   margin-left: 30px;
   color: #fff;
-  font-family: 'Lemonada', cursive;
+  font-family: "Lemonada", cursive;
 }
 
 .restartButton:focus {
   outline: none;
-}
-
-.winModal {
-  max-width: 750px;
-  max-height: 500px;
-  background-color: red;
 }
 
 @keyframes spinIn {
@@ -131,3 +124,4 @@
     transform: rotate(0deg)
   }
 }
+
