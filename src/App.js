@@ -46,7 +46,6 @@ class App extends Component {
     openLoseModal: false
   }
 
-
   intervalID = 0;
 
   startGame = () => {
@@ -56,150 +55,119 @@ class App extends Component {
     }, 1000)
   }
 
-  flipHandler = (index) => {
+  flipHandler = index => {
     const { firstFlip, secondFlip } = this.state;
     if (firstFlip == null) {
-      this.decreaseCount();
-      let newCards = this.state.cards;
-      newCards[index].flipped = true;
+      this.decreaseCount()
+      let newCards = this.state.cards
+      newCards[index].flipped = true
       this.setState({ cards: newCards, firstFlip: index });
     } else if (secondFlip == null) {
-      this.decreaseCount();
-      let newCards = this.state.cards;
-      newCards[index].flipped = true;
-      this.setState({ cards: newCards, secondFlip: index });
+      this.decreaseCount()
+      let newCards = this.state.cards
+      newCards[index].flipped = true
+      this.setState({ cards: newCards, secondFlip: index })
     }
-    this.checkGameWon();
-  };
+    this.checkGameWon()
+  }
 
   componentDidUpdate() {
     const { firstFlip, secondFlip, cards } = this.state
     if (firstFlip != null && secondFlip != null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
-        this.increaseScore();
-        this.setState({ firstFlip: null, secondFlip: null });
+        this.increaseScore()
+        this.setState({ firstFlip: null, secondFlip: null })
       } else if (cards[firstFlip].image !== cards[secondFlip].image) {
         setTimeout(() => {
-          let newCards = this.state.cards;
-          cards[firstFlip].flipped = false;
-          cards[secondFlip].flipped = false;
-          this.setState({ cards: newCards, firstFlip: null, secondFlip: null });
-        }, 1000);
+          let newCards = this.state.cards
+          cards[firstFlip].flipped = false
+          cards[secondFlip].flipped = false
+          this.setState({ cards: newCards, firstFlip: null, secondFlip: null })
+        }, 1000)
       }
     }
   }
 
   increaseScore = () => {
-    this.setState({ score: this.state.score + 1 });
-  };
+    this.setState({ score: this.state.score + 1 })
+  }
 
   decreaseCount = () => {
-    this.setState({ count: this.state.count - 1 });
-    console.log(this.state.count);
-  };
+    this.setState({ count: this.state.count - 1 })
+    console.log(this.state.count)
+  }
 
- checkGameLost = () => {
+  checkGameLost = () => {
     if (this.state.count === 0 || this.state.timer === 0) {
       this.setState({ openLoseModal: true })
-      clearInterval(this.intervalID)
     }
   }
 
- checkGameWon = () => {
+  checkGameWon = () => {
     const checker = this.state.cards.every(cards => cards.flipped === true);
     if (checker === true) {
-      this.setState({ active: true, openWinModal: true })
-      clearInterval(this.intervalID)
+      this.setState({ active: true, openWinModal: true, timer: 6000 })
     }
   }
 
   restartHandler = () => {
     for (let i = 0; i < this.state.cards.length; i++) {
-      this.setState((state) => {
-        let newState = JSON.parse(JSON.stringify(state));
+      this.setState(state => {
+        let newState = JSON.parse(JSON.stringify(state))
         newState.cards[i].flipped = false;
         return {
-          cards: newState.cards,
-        };
-      });
+          cards: newState.cards
+        }
+      })
     }
-
-    this.setState({
-      count: 24,
-      score: 0,
-      firstFlip: null,
-      secondFlip: null,
-      timer: 20,
-    });
-    clearInterval(this.intervalID);
-  };
-
-  render() {
-    const {
-      score,
-      count,
-      timer,
-      cards,
-      message,
-      openWinModal,
-      openLoseModal,
-    } = this.state;
-
     this.setState({ count: 24, score: 0, firstFlip: null, secondFlip: null, timer: 20, openWinModal: false, openLoseModal: false })
     clearInterval(this.intervalID)
   }
 
   render() {
     const { score, count, timer, cards, message, openWinModal, openLoseModal } = this.state;
-
     return (
       <div className="board">
         <div className="header">
           <div className="title">
-            <h1>MEMORY GAME</h1>
+            <h1 className='memory'>MEMORY GAME</h1>
           </div>
           <div className="messages">
+            <Confetti active={this.state.active} />
             <Score score={score} count={count} timer={timer} />
           </div>
-          <button onClick={this.startGame}>START GAME</button>
+          <button className="start-button" onClick={this.startGame}>START GAME</button>
         </div>
-        <Modal
-          open={openWinModal}
-          onClose={this.restartHandler}
-          center
-          styles={{
-            modal: {
-              width: "400px",
-              height: "300px",
-              borderRadius: "15%",
-              fontFamily: "'Lemonada', cursive",
-              color: "#fff",
-              backgroundImage: "url(https://www.snopes.com/tachyon/2015/07/fireworks.png?resize=836,452)",
-              animation: `${
-                openWinModal ? 'spinIn' : 'spinOut'
-                } 2000ms`,
-            },
-          }}>
+        <Confetti active={this.state.active} />
+        <Modal open={openWinModal} onClose={this.restartHandler} center styles={{
+          modal: {
+            width: "400px",
+            height: "300px",
+            borderRadius: "15%",
+            fontFamily: "'Lemonada', cursive",
+            color: "#fff",
+            backgroundImage: "url(https://www.snopes.com/tachyon/2015/07/fireworks.png?resize=836,452)",
+            animation: `${
+              openWinModal ? 'spinIn' : 'spinOut'
+              } 2000ms`,
+          },
+        }}>
           <h2>Winner Winner</h2>
+          <img src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg" alt="chicken dinner" />
         </Modal>
-        <Modal
-          open={openLoseModal}
-          onClose={this.restartHandler}
-          center
-          styles={{
-            modal: {
-              width: "400px",
-              height: "300px",
-              borderRadius: "15%",
-              fontFamily: "'Lemonada', cursive",
-              backgroundImage: "url(https://media1.giphy.com/media/mcH0upG1TeEak/200.gif)",
-              backgroundSize: "100% 100%",
-              animation: `${
-                openWinModal ? 'spinIn' : 'spinOut'
-                } 2000ms`,
-            },
-          }}>
-          <h2></h2>
+        <Modal open={openLoseModal} onClose={this.restartHandler} center styles={{
+          modal: {
+            width: "400px",
+            height: "300px",
+            borderRadius: "15%",
+            fontFamily: "'Lemonada', cursive",
+            backgroundImage: "url(https://media1.giphy.com/media/mcH0upG1TeEak/200.gif)",
+            backgroundSize: "100% 100%",
+            animation: `${
+              openWinModal ? 'spinIn' : 'spinOut'
+              } 2000ms`,
+          },
+        }}>
         </Modal>
         <div className="mainBody">
           {cards.map((card, index) => {
@@ -215,11 +183,10 @@ class App extends Component {
               </>
             );
           })}
+          <Confetti active={this.state.active} />
         </div>
         <p> {message} </p>
-        <button className="restartButton" onClick={this.restartHandler}>
-          RESTART
-        </button>
+        <button className="restartButton" onClick={this.restartHandler}>RESTART</button>
       </div>
     );
   }

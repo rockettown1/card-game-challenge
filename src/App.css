@@ -8,6 +8,10 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  font-family: 'Lemonada', cursive;
+  background-image: linear-gradient(to bottom right, #e62310, #009bd9, #44af35, #fccf00);
+  background-color: #888;
+  border-radius: 5%;
   margin-left: 340px;
 }
 
@@ -51,6 +55,23 @@
 
 .restartButton:focus {
   outline: none;
+}
+
+.start-button {
+  display: center;
+  background-color: orange;
+  border-radius: 25%;
+  padding: 5px;
+  box-shadow: 5px 5px #888888;
+  color: white;
+  opacity: 0.5;
+  transition: 0.3s;
+}
+
+.start-button:hover {opacity: 3; background-color: #ff3300}
+
+.memory {
+  color: #FE0002, #0001FC, #FFD987, #6A0400;
 }
 
 @keyframes spinIn {
