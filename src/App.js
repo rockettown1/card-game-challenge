@@ -99,7 +99,7 @@ class App extends Component {
   checkGameWon = () => {
     const checker = this.state.cards.every(cards => cards.flipped === true);
     if (checker === true) {
-      this.setState({ active: true, openWinModal: true })
+      this.setState({ active: true, openWinModal: true, timer: 60 })
     }
   }
 
