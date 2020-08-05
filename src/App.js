@@ -4,6 +4,9 @@ import "./App.css";
 import Bowser from "./images/bowser.jpg";
 import BabyMario from "./images/babymario.jpg";
 import Score from "./components/Score";
+import Confetti from 'react-dom-confetti';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 class App extends Component {
   state = {
@@ -30,7 +33,10 @@ class App extends Component {
     secondFlip: null,
     score: 0,
     count: 24,
-    timer: 20
+    timer: 20,
+    active: false,
+    openWinModal: false,
+    openLoseModal: false
   }
 
   intervalID = 0;
@@ -58,7 +64,6 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    this.checkGameLost()
     const { firstFlip, secondFlip, cards } = this.state
     if (firstFlip != null && secondFlip != null) {
       if (cards[firstFlip].image === cards[secondFlip].image) {
@@ -73,6 +78,7 @@ class App extends Component {
         }, 1000)
       }
     }
+    this.checkGameLost()
   }
 
   increaseScore = () => {
@@ -86,25 +92,15 @@ class App extends Component {
 
   checkGameLost = () => {
     if (this.state.count === 0 || this.state.timer === 0) {
-      this.gameOverLogic()
+      this.setState({ openLoseModal: true })
     }
   }
 
   checkGameWon = () => {
     const checker = this.state.cards.every(cards => cards.flipped === true);
     if (checker === true) {
-      this.winningLogic()
+      this.setState({ active: true, openWinModal: true })
     }
-  }
-
-  winningLogic = () => {
-    alert('You Win!')
-    this.restartHandler()
-  }
-
-  gameOverLogic = () => {
-    alert("YOU LOST")
-    this.restartHandler()
   }
 
   restartHandler = () => {
@@ -117,12 +113,13 @@ class App extends Component {
         }
       })
     }
-    this.setState({ count: 24, score: 0, firstFlip: null, secondFlip: null, timer: 20 })
+    this.setState({ count: 24, score: 0, firstFlip: null, secondFlip: null, timer: 20, open: false })
     clearInterval(this.intervalID)
   }
 
   render() {
-    const { score, count, timer, cards, message } = this.state;
+
+    const { score, count, timer, cards, message, openWinModal, openLoseModal } = this.state;
     return (
       <div className="board">
         <div className="header">
@@ -130,21 +127,34 @@ class App extends Component {
             <h1>MEMORY GAME</h1>
           </div>
           <div className="messages">
+            <Confetti active={this.state.active} />
             <Score score={score} count={count} timer={timer} />
           </div>
           <button onClick={this.startGame}>START GAME</button>
         </div>
+        <Confetti active={this.state.active} />
+        <Modal open={openWinModal} onClose={this.restartHandler} center>
+          <h2>Winner Winner</h2>
+          <img src="https://www.dinneratthezoo.com/wp-content/uploads/2015/08/grilled-chicken-breast-5.jpg" alt="chicken dinner" />
+        </Modal>
+        <Modal open={openLoseModal} onClose={this.restartHandler} center>
+          <h2>You Lost</h2>
+        </Modal>
         <div className="mainBody">
           {cards.map((card, index) => {
             return (
-              <Card
-                key={index}
-                image={card.image}
-                flipped={card.flipped}
-                click={() => this.flipHandler(index)}
-              />
+              <>
+                <Confetti active={this.state.active} />
+                <Card
+                  key={index}
+                  image={card.image}
+                  flipped={card.flipped}
+                  click={() => this.flipHandler(index)}
+                />
+              </>
             );
           })}
+          <Confetti active={this.state.active} />
         </div>
         <p> {message} </p>
         <button className="restartButton" onClick={this.restartHandler}>RESTART</button>
