@@ -99,13 +99,15 @@ class App extends Component {
   checkGameLost = () => {
     if (this.state.count === 0 || this.state.timer === 0) {
       this.setState({ openLoseModal: true })
+      clearInterval(this.intervalID)
     }
   }
 
   checkGameWon = () => {
     const checker = this.state.cards.every(cards => cards.flipped === true);
     if (checker === true) {
-      this.setState({ active: true, openWinModal: true, timer: 6000 })
+      this.setState({ active: true, openWinModal: true })
+      clearInterval(this.intervalID)
     }
   }
 
@@ -148,7 +150,7 @@ class App extends Component {
             backgroundImage: "url(https://www.snopes.com/tachyon/2015/07/fireworks.png?resize=836,452)",
             animation: `${
               openWinModal ? 'spinIn' : 'spinOut'
-              } 2000ms`,
+              } 2400ms ease-in-out`,
           },
         }}>
           <h2>Winner Winner</h2>
@@ -162,8 +164,8 @@ class App extends Component {
             backgroundImage: "url(https://media1.giphy.com/media/mcH0upG1TeEak/200.gif)",
             backgroundSize: "100% 100%",
             animation: `${
-              openWinModal ? 'spinIn' : 'spinOut'
-              } 2000ms`,
+              openLoseModal ? 'spinIn' : 'spinOut'
+              } 2400ms ease-in-out`,
           },
         }}>
         </Modal>
